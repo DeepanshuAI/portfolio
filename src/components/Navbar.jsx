@@ -38,7 +38,7 @@ export default function Navbar({ isDark, setIsDark }) {
           {/* Logo */}
           <Link to="hero" smooth duration={600} className="cursor-pointer">
             <span className="font-mono text-xl font-bold gradient-text">
-              &lt;Alex /&gt;
+              &lt;Deepanshu /&gt;
             </span>
           </Link>
 
