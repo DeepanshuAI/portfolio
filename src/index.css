@@ -1,0 +1,333 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================
+   CSS Custom Properties
+   ===================== */
+:root {
+  --color-bg: #07070F;
+  --color-surface: #0D0D1A;
+  --color-surface-2: #12121E;
+  --color-border: #1A1A2E;
+  --color-primary: #7C3AED;
+  --color-primary-light: #A78BFA;
+  --color-secondary: #06B6D4;
+  --color-secondary-light: #22D3EE;
+  --color-accent: #FBBF24;
+  --color-accent-light: #FDE68A;
+  --color-text: #EDEDF5;
+  --color-muted: #9896B4;
+  --color-subtle: #52506E;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-heading: 'Montserrat', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-spring: cubic-bezier(0.34, 1.2, 0.64, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+}
+
+/* =====================
+   Base Reset & Globals
+   ===================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles scroll */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.65;
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Show default cursor on touch devices */
+@media (hover: none) {
+  body { cursor: auto; }
+}
+
+/* =====================
+   Custom Scrollbar
+   ===================== */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.25);
+  border-radius: 100px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 58, 237, 0.5);
+}
+
+/* =====================
+   Selection
+   ===================== */
+::selection {
+  background-color: rgba(124, 58, 237, 0.28);
+  color: var(--color-text);
+}
+
+/* =====================
+   Utility Classes
+   ===================== */
+@layer utilities {
+  /* Font families */
+  .font-display  { font-family: var(--font-display); }
+  .font-heading  { font-family: var(--font-heading); }
+  .font-body     { font-family: var(--font-body); }
+  .font-mono     { font-family: var(--font-mono); }
+
+  /* Gradient text */
+  .text-gradient-primary {
+    background: linear-gradient(135deg, #A78BFA 0%, #22D3EE 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-warm {
+    background: linear-gradient(135deg, #C4B5FD 0%, #FBBF24 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-accent {
+    background: linear-gradient(135deg, #FBBF24, #F87171);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass morphism — three levels, use sparingly */
+  /* Level 1: very light, for nav and overlays */
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Level 2: strong, for navbar on scroll */
+  .glass-strong {
+    background: rgba(7, 7, 15, 0.88);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+  }
+
+  /* Level 3: card-level — no backdrop-filter (expensive), just subtle bg */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.055);
+  }
+
+  /* Glow effects — use box-shadow only, avoid filter:drop-shadow */
+  .shadow-glow-primary    { box-shadow: 0 0 32px rgba(124, 58, 237, 0.28); }
+  .shadow-glow-primary-sm { box-shadow: 0 0 16px rgba(124, 58, 237, 0.22); }
+  .shadow-glow-secondary  { box-shadow: 0 0 32px rgba(6, 182, 212, 0.22); }
+  .shadow-glow-accent     { box-shadow: 0 0 32px rgba(251, 191, 36, 0.22); }
+  .shadow-card            { box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255,255,255,0.03) inset; }
+  .shadow-card-hover      { box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55), 0 1px 0 rgba(255,255,255,0.05) inset; }
+  .shadow-modal           { box-shadow: 0 40px 100px rgba(0, 0, 0, 0.75); }
+
+  /* Section spacing — tighter than before */
+  .section-padding {
+    padding-top: clamp(4rem, 8vw, 7rem);
+    padding-bottom: clamp(4rem, 8vw, 7rem);
+  }
+
+  /* Container */
+  .container-custom {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1.25rem, 5vw, 3.5rem);
+    padding-right: clamp(1.25rem, 5vw, 3.5rem);
+  }
+
+  /* Typography — improved readability */
+  .text-2xs { font-size: 0.65rem; line-height: 1rem; }
+
+  /* Display headings: Playfair Display is a high-contrast serif — it reads best
+     with very slight negative tracking at large sizes, zero at medium, relaxed at small.
+     Montserrat headings retain a slight negative track. */
+  .tracking-display  { letter-spacing: -0.01em; }  /* Playfair: less negative than grotesks */
+  .tracking-heading  { letter-spacing: -0.015em; } /* Montserrat heading */
+  .tracking-label    { letter-spacing: 0.14em; }   /* Labels: slightly tighter */
+
+  /* Shimmer overlay for buttons */
+  .shimmer {
+    background: linear-gradient(
+      100deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.07) 50%,
+      transparent 70%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2.5s linear infinite;
+  }
+
+  /* Gradient border */
+  .border-gradient-primary {
+    position: relative;
+    isolation: isolate;
+  }
+  .border-gradient-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(124,58,237,0.45), rgba(6,182,212,0.45));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Skill progress bar track */
+  .skill-bar {
+    height: 2px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+  }
+
+  .skill-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    transform-origin: left;
+    transition: transform 1s var(--ease);
+  }
+}
+
+/* =====================
+   Keyframes
+   ===================== */
+@keyframes marquee {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marqueeReverse {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+/* =====================
+   Reduced Motion
+   ===================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  body { cursor: auto; }
+}
+
+/* =====================
+   Focus (Accessibility)
+   ===================== */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* =====================
+   Marquee pause on hover
+   ===================== */
+.marquee-row:hover .marquee-inner {
+  animation-play-state: paused;
+}
+
+/* =====================
+   Form — floating label
+   ===================== */
+.form-field { position: relative; }
+
+.form-field input,
+.form-field textarea {
+  padding-top: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.form-field label {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.875rem;
+  color: var(--color-subtle);
+  pointer-events: none;
+  transition: all 0.18s var(--ease);
+  transform-origin: left;
+}
+
+.form-field textarea ~ label {
+  top: 1.25rem;
+  transform: none;
+}
+
+.form-field input:focus ~ label,
+.form-field input:not(:placeholder-shown) ~ label {
+  top: 0.5rem;
+  transform: translateY(0) scale(0.72);
+  color: var(--color-primary-light);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.form-field textarea:focus ~ label,
+.form-field textarea:not(:placeholder-shown) ~ label {
+  top: 0.375rem;
+  transform: scale(0.72);
+  transform-origin: left;
+  color: var(--color-primary-light);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+/* =====================
+   Print
+   ===================== */
+@media print {
+  canvas, nav, footer { display: none !important; }
+  body { background: white; color: black; }
+}
